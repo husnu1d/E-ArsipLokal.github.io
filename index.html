@@ -43,13 +43,15 @@
             <form action="" method="">
               <div
                 class="mb-4 relative group open-sans"
-                x-data="{focused:false}"
+                x-data="{focused:false, EmailInput:'',PasswordInput:''}"
                 @focusin="focused=true"
                 @focusout="focused=false"
               >
                 <label
                   for="email"
-                  class="block text-[.9em] font-medium mb-2 absolute left-3 top-4  group-hover:cursor-text group-hover:text-gray-500 duration-300 transition-all ease-in-out group-focus-within:-top-4 group-focus-within:bg-purple-50 group-focus-within:px-4 group-focus-within:text-gray-500"
+                  :class="{'text-[.7em] font-thin': focused, 'text-[.9em]': !focused}"
+                  class="block mb-2 absolute left-3 top-4 group-hover:cursor-text group-hover:text-gray-500 duration-300 transition-all ease-in-out group-focus-within:-top-4 group-focus-within:bg-purple-50 group-focus-within:px-4 group-focus-within:text-gray-500"
+                  aria-label="Please Input Your Email"
                   x-text="focused ? 'Email Address' : 'Enter Your Email Address'"
                   x-transition
                   autofocus
@@ -61,6 +63,12 @@
                   class="bg-transparent border-b-2 border-blue-500 w-full py-2 px-4 rounded text-custom-white focus:outline-none focus:ring-2 focus:ring-blue-600"
                   @focusin="focused = true"
                   @focusout="focused = false"
+                  required
+                  x-model="EmailInput"
+                  maxlength="100"
+                  minlength="0"
+                  pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                  @input="EmailInput = xssFilters.inHTMLData($event.target.value)"
                 />
               </div>
 
@@ -72,8 +80,11 @@
               >
                 <label
                   for="password"
-                  class="block text-[.9em] font-medium mb-2 absolute left-3 top-4 text-black group-hover:cursor-text group-hover:text-gray-500 duration-300 transition-all ease-in-out group-focus-within:-top-4 group-focus-within:bg-purple-50 group-focus-within:px-4 group-focus-within:text-gray-500"
+                  :class="{'text-[.7em] font-thin': focused, 'text-[.9em]':!focused}"
+                  class="block mb-2 absolute left-3 top-4 text-black group-hover:cursor-text group-hover:text-gray-500 duration-300 transition-all ease-in-out group-focus-within:-top-4 group-focus-within:bg-purple-50 group-focus-within:px-4 group-focus-within:text-gray-500"
+                  aria-label="Please Input Your Password"
                   x-text="focused ? 'Password' : 'Enter Your Password'"
+                  minlength="0"
                   x-transition
                   >Password</label
                 >
@@ -84,26 +95,31 @@
                   class="bg-transparent border-b-2 border-blue-500 w-full py-2 px-4 rounded text-custom-white focus:outline-none focus:ring-2 focus:ring-blue-600"
                   @focusin="focused = true"
                   @focusout="focused = false"
+                  required
+                  x-model="PasswordInput"
+                  @input="PasswordInput = xssFilters.inHTMLData($event.target.value)"
                 />
               </div>
               <button
                 type="submit"
-                class="w-full overflow-hidden rounded-2xl py-2 rounded bg-blue-600 hover:bg-blue-700 text-white font-semibold"
+                class="w-full open-sans overflow-hidden rounded-2xl py-2 rounded bg-blue-600 hover:bg-blue-700 text-white font-semibold"
               >
                 Log in
               </button>
             </form>
-            <p class="text-[.8em] text-red-700 text-center font-medium opacity-0 ">
-              Sorry , Your Password Or Your Email Was Incorrect. Please  double-check it.
+            <p
+              class="text-[.8em] text-red-700 text-center font-medium opacity-0"
+            >
+              Sorry , Your Password Or Your Email Was Incorrect. Please
+              double-check it.
             </p>
-            <p class=" text-center text-[.8em] ">
+            <p class="text-center text-[.8em]">
               <a
                 href="#"
                 class="text-blue-600 active:text-blue-950 ease-in-out transition-all"
                 >Forgot password?</a
               >
             </p>
-            
           </div>
         </div>
       </div>
