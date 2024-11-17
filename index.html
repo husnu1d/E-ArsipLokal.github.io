@@ -1,23 +1,112 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login | E-Arsip Data</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
       rel="stylesheet"
-      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-      crossorigin="anonymous"
     />
-    
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="tailwind.config.js"></script>
+    <style type="text/tailwindcss">
+      @layer utilities {
+        .open-sans {
+          font-family: "Open Sans", "Times New Roman", Times, serif;
+        }
+      }
+    </style>
   </head>
   <body>
-    
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-      crossorigin="anonymous"
-    ></script>
+    <div
+      class="w-full h-screen grid place-items-center border overflow-hidden bg-purple-50"
+    >
+      <div
+        class="border flex md:w-[768px] w-[80%] max-sm:flex-col flex-row h-[60dvh] overflow-hidden rounded-lg relative"
+      >
+        <div
+          class="flex-1 block max-md:hidden static max-md:absolute max-md:top-0 max-md:bottom-0 max-md:left-0 max-md:right-0"
+        >
+          <img src="" alt="Img" class="w-full h-screen bg-slate-500" />
+        </div>
+        <div
+          action=""
+          class="flex-1 max-md:relative z-10 flex justify-center items-center"
+        >
+          <div class="w-[80%] h-full flex flex-col justify-around">
+            <h2 class="text-4xl font-semibold text-center w-fit text-balance">
+              E-Arsip Lokal Github
+            </h2>
+            <form action="" method="">
+              <div
+                class="mb-4 relative group open-sans"
+                x-data="{focused:false}"
+                @focusin="focused=true"
+                @focusout="focused=false"
+              >
+                <label
+                  for="email"
+                  class="block text-[.9em] font-medium mb-2 absolute left-3 top-4  group-hover:cursor-text group-hover:text-gray-500 duration-300 transition-all ease-in-out group-focus-within:-top-4 group-focus-within:bg-purple-50 group-focus-within:px-4 group-focus-within:text-gray-500"
+                  x-text="focused ? 'Email Address' : 'Enter Your Email Address'"
+                  x-transition
+                  autofocus
+                >
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  class="bg-transparent border-b-2 border-blue-500 w-full py-2 px-4 rounded text-custom-white focus:outline-none focus:ring-2 focus:ring-blue-600"
+                  @focusin="focused = true"
+                  @focusout="focused = false"
+                />
+              </div>
+
+              <div
+                class="mb-6 relative group open-sans"
+                x-data="{focused:false}"
+                @focusin="focused=true"
+                @focusout="focused=false"
+              >
+                <label
+                  for="password"
+                  class="block text-[.9em] font-medium mb-2 absolute left-3 top-4 text-black group-hover:cursor-text group-hover:text-gray-500 duration-300 transition-all ease-in-out group-focus-within:-top-4 group-focus-within:bg-purple-50 group-focus-within:px-4 group-focus-within:text-gray-500"
+                  x-text="focused ? 'Password' : 'Enter Your Password'"
+                  x-transition
+                  >Password</label
+                >
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  class="bg-transparent border-b-2 border-blue-500 w-full py-2 px-4 rounded text-custom-white focus:outline-none focus:ring-2 focus:ring-blue-600"
+                  @focusin="focused = true"
+                  @focusout="focused = false"
+                />
+              </div>
+              <button
+                type="submit"
+                class="w-full overflow-hidden rounded-2xl py-2 rounded bg-blue-600 hover:bg-blue-700 text-white font-semibold"
+              >
+                Log in
+              </button>
+            </form>
+            <p class="text-[.8em] text-red-700 text-center font-medium opacity-0 ">
+              Sorry , Your Password Or Your Email Was Incorrect. Please  double-check it.
+            </p>
+            <p class=" text-center text-[.8em] ">
+              <a
+                href="#"
+                class="text-blue-600 active:text-blue-950 ease-in-out transition-all"
+                >Forgot password?</a
+              >
+            </p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
