@@ -10,7 +10,10 @@
       href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
       rel="stylesheet"
     />
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <title>Log-in Pages | E-Arsip Lokal</title>
+    
+    <script></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <script src="tailwind.config.js"></script>
     <style type="text/tailwindcss">
       @layer utilities {
@@ -30,76 +33,83 @@
         <div
           class="flex-1 block max-md:hidden static max-md:absolute max-md:top-0 max-md:bottom-0 max-md:left-0 max-md:right-0"
         >
-          <img src="" alt="Img" class="w-full h-screen bg-slate-500" />
+          <img
+            src=""
+            alt="Img"
+            class="max-w-full h-auto object-cover bg-slate-500"
+          />
         </div>
         <div
           action=""
           class="flex-1 max-md:relative z-10 flex justify-center items-center"
         >
           <div class="w-[80%] h-full flex flex-col justify-around">
-            <h2 class="text-4xl font-semibold text-center w-fit text-balance">
+            <h2
+              class="text-4xl font-bold text-center w-fit text-balance text-blue-600"
+            >
               E-Arsip Lokal Github
             </h2>
             <form action="" method="">
               <div
                 class="mb-4 relative group open-sans"
-                x-data="{focused:false, EmailInput:'',PasswordInput:''}"
+                x-data="{focused:false , EmailInput: '', PasswordInput: ''}"
                 @focusin="focused=true"
                 @focusout="focused=false"
               >
                 <label
-                  for="email"
-                  :class="{'text-[.7em] font-thin': focused, 'text-[.9em]': !focused}"
-                  class="block mb-2 absolute left-3 top-4 group-hover:cursor-text group-hover:text-gray-500 duration-300 transition-all ease-in-out group-focus-within:-top-4 group-focus-within:bg-purple-50 group-focus-within:px-4 group-focus-within:text-gray-500"
+                  for="EmailInput"
+                  :class="{'text-[.7em] font-thin group-focus-within:-top-4 ': focused, 'text-[.9em] -z-10 left-3 top-4': !focused, 'text-[.7em] font-thin -top-4' : EmailInput !== '' }"
+                  class="block mb-2 absolute  group-hover:cursor-text group-hover:text-gray-500 duration-300 transition-all ease-in-out group-focus-within:bg-purple-50 group-focus-within:px-4 group-focus-within:text-gray-500 "
                   aria-label="Please Input Your Email"
-                  x-text="focused ? 'Email Address' : 'Enter Your Email Address'"
+                  x-text="EmailInput !== '' || focused ? 'Email Address' : 'Enter Your Email Address'"
                   x-transition
                   autofocus
-                >
+                  autocomplete="off"
+                  >
                 </label>
-                <input
+              <input
                   type="email"
-                  id="email"
-                  class="bg-transparent border-b-2 border-blue-500 w-full py-2 px-4 rounded text-custom-white focus:outline-none focus:ring-2 focus:ring-blue-600"
+                  id="EmailInput"
+                  class="bg-transparent border-b-2 border-blue-500 w-full py-2 px-4 rounded text-custom-white focus:outline-none focus:ring-2 focus:ring-blue-600 "
                   @focusin="focused = true"
                   @focusout="focused = false"
                   required
-                  x-model="EmailInput"
                   maxlength="100"
                   minlength="0"
+                  x-model="EmailInput"
                   pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
-                  @input="EmailInput = xssFilters.inHTMLData($event.target.value)"
+                />
+              </div>
+              <div
+                class="mb-4 relative group open-sans"
+                x-data="{focused:false , EmailInput: '', PasswordInput: ''}"
+                @focusin="focused=true"
+                @focusout="focused=false"
+              >
+                <label
+                  for="PasswordInput"
+                  :class="{'text-[.7em] font-thin group-focus-within:-top-4 ': focused, 'text-[.9em] -z-10 left-3 top-4': !focused, 'text-[.7em] font-thin -top-4' : PasswordInput !== '' }"
+                  class="block mb-2 absolute  group-hover:cursor-text group-hover:text-gray-500 duration-300 transition-all ease-in-out group-focus-within:bg-purple-50 group-focus-within:px-4 group-focus-within:text-gray-500 "
+                  aria-label="Please Input Your Password"
+                  x-text="PasswordInput !== '' || focused ? 'Password' : 'Enter Your Password'"
+                  x-transition
+                  autofocus
+                  autocomplete="off"
+                  >
+                </label>
+              <input
+                  type="password"
+                  id="PasswordInput"
+                  class="bg-transparent border-b-2 border-blue-500 w-full py-2 px-4 rounded text-custom-white focus:outline-none focus:ring-2 focus:ring-blue-600 "
+                  @focusin="focused = true"
+                  @focusout="focused = false"
+                  required
+                  minlength="8"
+                  x-model="PasswordInput"
                 />
               </div>
 
-              <div
-                class="mb-6 relative group open-sans"
-                x-data="{focused:false}"
-                @focusin="focused=true"
-                @focusout="focused=false"
-              >
-                <label
-                  for="password"
-                  :class="{'text-[.7em] font-thin': focused, 'text-[.9em]':!focused}"
-                  class="block mb-2 absolute left-3 top-4 text-black group-hover:cursor-text group-hover:text-gray-500 duration-300 transition-all ease-in-out group-focus-within:-top-4 group-focus-within:bg-purple-50 group-focus-within:px-4 group-focus-within:text-gray-500"
-                  aria-label="Please Input Your Password"
-                  x-text="focused ? 'Password' : 'Enter Your Password'"
-                  minlength="0"
-                  x-transition
-                  >Password</label
-                >
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  class="bg-transparent border-b-2 border-blue-500 w-full py-2 px-4 rounded text-custom-white focus:outline-none focus:ring-2 focus:ring-blue-600"
-                  @focusin="focused = true"
-                  @focusout="focused = false"
-                  required
-                  x-model="PasswordInput"
-                  @input="PasswordInput = xssFilters.inHTMLData($event.target.value)"
-                />
-              </div>
+              
               <button
                 type="submit"
                 class="w-full open-sans overflow-hidden rounded-2xl py-2 rounded bg-blue-600 hover:bg-blue-700 text-white font-semibold"
