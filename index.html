@@ -10,18 +10,33 @@
       href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
       rel="stylesheet"
     />
-    <title>Log-in Pages | E-Arsip Lokal</title>
-    
-    <script></script>
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-    <script src="tailwind.config.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@splidejs/splide@3/dist/css/splide.min.css"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/@splidejs/splide@3/dist/js/splide.min.js"
+      defer
+    ></script>
     <style type="text/tailwindcss">
       @layer utilities {
         .open-sans {
           font-family: "Open Sans", "Times New Roman", Times, serif;
         }
+        .splide__slide img {
+          max-width: 100%;
+          height: auto;
+          object-fit: cover;
+        }
       }
     </style>
+    <title>Log-in Pages | E-Arsip Lokal</title>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+      defer
+    ></script>
+    <script src="tailwind.config.js"></script>
   </head>
   <body>
     <div
@@ -31,13 +46,31 @@
         class="border flex md:w-[768px] w-[80%] max-sm:flex-col flex-row h-[60dvh] overflow-hidden rounded-lg relative"
       >
         <div
+          x-data="slider()"
+          x-init="fetchImages()"
           class="flex-1 block max-md:hidden static max-md:absolute max-md:top-0 max-md:bottom-0 max-md:left-0 max-md:right-0"
         >
-          <img
+          <div class="splide">
+            <div class="splide__track">
+              <ul class="splide__list">
+                <template x-for="image in images" :key="image.id">
+                  <li class="splide__slide">
+                    <img
+                      :src="image.urls.regular"
+                      :alt="image.alt_description"
+                      loading="lazy"
+                    />
+                  </li>
+                </template>
+              </ul>
+            </div>
+          </div>
+
+          <!-- <img
             src=""
             alt="Img"
             class="max-w-full h-auto object-cover bg-slate-500"
-          />
+          /> -->
         </div>
         <div
           action=""
@@ -59,18 +92,18 @@
                 <label
                   for="EmailInput"
                   :class="{'text-[.7em] font-thin group-focus-within:-top-4 ': focused, 'text-[.9em] -z-10 left-3 top-4': !focused, 'text-[.7em] font-thin -top-4' : EmailInput !== '' }"
-                  class="block mb-2 absolute  group-hover:cursor-text group-hover:text-gray-500 duration-300 transition-all ease-in-out group-focus-within:bg-purple-50 group-focus-within:px-4 group-focus-within:text-gray-500 "
+                  class="block mb-6 absolute group-hover:cursor-text group-hover:text-gray-500 duration-300 transition-all ease-in-out group-focus-within:bg-purple-50 group-focus-within:px-4 group-focus-within:text-gray-500"
                   aria-label="Please Input Your Email"
                   x-text="EmailInput !== '' || focused ? 'Email Address' : 'Enter Your Email Address'"
                   x-transition
                   autofocus
                   autocomplete="off"
-                  >
+                >
                 </label>
-              <input
+                <input
                   type="email"
                   id="EmailInput"
-                  class="bg-transparent border-b-2 border-blue-500 w-full py-2 px-4 rounded text-custom-white focus:outline-none focus:ring-2 focus:ring-blue-600 "
+                  class="bg-transparent border-b-2 border-blue-500 w-full py-2 px-4 rounded text-custom-white focus:outline-none focus:ring-2 focus:ring-blue-600"
                   @focusin="focused = true"
                   @focusout="focused = false"
                   required
@@ -89,18 +122,18 @@
                 <label
                   for="PasswordInput"
                   :class="{'text-[.7em] font-thin group-focus-within:-top-4 ': focused, 'text-[.9em] -z-10 left-3 top-4': !focused, 'text-[.7em] font-thin -top-4' : PasswordInput !== '' }"
-                  class="block mb-2 absolute  group-hover:cursor-text group-hover:text-gray-500 duration-300 transition-all ease-in-out group-focus-within:bg-purple-50 group-focus-within:px-4 group-focus-within:text-gray-500 "
+                  class="block mb-2 absolute group-hover:cursor-text group-hover:text-gray-500 duration-300 transition-all ease-in-out group-focus-within:bg-purple-50 group-focus-within:px-4 group-focus-within:text-gray-500"
                   aria-label="Please Input Your Password"
                   x-text="PasswordInput !== '' || focused ? 'Password' : 'Enter Your Password'"
                   x-transition
                   autofocus
                   autocomplete="off"
-                  >
+                >
                 </label>
-              <input
+                <input
                   type="password"
                   id="PasswordInput"
-                  class="bg-transparent border-b-2 border-blue-500 w-full py-2 px-4 rounded text-custom-white focus:outline-none focus:ring-2 focus:ring-blue-600 "
+                  class="bg-transparent border-b-2 border-blue-500 w-full py-2 px-4 rounded text-custom-white focus:outline-none focus:ring-2 focus:ring-blue-600"
                   @focusin="focused = true"
                   @focusout="focused = false"
                   required
@@ -109,7 +142,6 @@
                 />
               </div>
 
-              
               <button
                 type="submit"
                 class="w-full open-sans overflow-hidden rounded-2xl py-2 rounded bg-blue-600 hover:bg-blue-700 text-white font-semibold"
@@ -134,5 +166,44 @@
         </div>
       </div>
     </div>
+    <script>
+      function slider() {
+        return {
+          images: [],
+          async fetchImages() {
+            try {
+              const response = await fetch(
+                "https://api.unsplash.com/photos/random?count=6&client_id=ebzEn9WLNPO1Lj7b9V-d6nX1b_51qqDIlwT-WVmgUyQ"
+              );
+              const data = await response.json();
+              this.images = data;
+
+              // Menambahkan gambar ke DOM
+              const splideContainer = document.querySelector(".splide__list");
+              splideContainer.innerHTML = ""; // Hapus konten sebelumnya
+
+              this.images.forEach((image) => {
+                const slide = document.createElement("li");
+                slide.classList.add("splide__slide");
+                slide.innerHTML = `<img src="${image.urls.regular}" alt="${image.alt_description}" />`;
+                splideContainer.appendChild(slide);
+              });
+
+              // Inisialisasi Splide setelah DOM siap
+              new Splide(".splide", {
+                type: "loop",
+                autoplay: true,
+                interval: 3000, // 3 detik antar-slide
+                lazyLoad: "nearby", // Lazy load gambar terdekat
+                arrows: false,
+                pagination: false,
+              }).mount();
+            } catch (error) {
+              console.error("Error fetching images:", error);
+            }
+          },
+        };
+      }
+    </script>
   </body>
 </html>
