@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>E-Arsip Dashboard</title>
+    <script
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+      defer
+    ></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-thumb {
+        background-color: #4a5568; /* Tailwind slate-600 */
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100">
+    <!-- Wrapper -->
+    <div x-data="{ sidebarOpen: false }" class="flex h-screen overflow-hidden">
+      <!-- Sidebar -->
+      <aside
+        :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
+        class="fixed inset-y-0 left-0 w-64 bg-slate-800 transform text-white transition-transform duration-300 md:translate-x-0 shadow-lg flex flex-col"
+      >
+        <div
+          class="px-4 py-5 text-center text-xl font-bold tracking-wide flex justify-between items-center"
+        >
+          <span>E-Arsip</span>
+          <button
+            @click="sidebarOpen = false"
+            class="hidden max-md:block text-gray-200 focus:outline-none" x-transition
+          >
+            <svg
+              class="h-6 w-6"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+        <!-- Logo -->
+        <!-- <div
+          class="px-4 py-5 text-center  text-xl font-bold tracking-wide"
+        >
+          E-Arsip
+        </div> -->
+        <!-- Menu -->
+        <nav class="flex-1 flex flex-col p-4 space-y-2">
+          <!-- Menu Utama -->
+          <a
+            href="#"
+            class="flex items-center gap-3 px-3 py-2 rounded hover:bg-slate-700"
+            :class="sidebarOpen && 'bg-slate-700'"
+          >
+            <span class="text-xl">🏠</span>
+            <span class="font-medium">Dashboard</span>
+          </a>
+          <a
+            href="#"
+            class="flex items-center gap-3 px-3 py-2 rounded hover:bg-slate-700"
+          >
+            <span class="text-xl">📄</span>
+            <span class="font-medium">Arsip Baru</span>
+          </a>
+          <a
+            href="#"
+            class="flex items-center gap-3 px-3 py-2 rounded hover:bg-slate-700"
+          >
+            <span class="text-xl">📂</span>
+            <span class="font-medium">Daftar Arsip</span>
+          </a>
+          <a
+            href="#"
+            class="flex items-center gap-3 px-3 py-2 rounded hover:bg-slate-700"
+          >
+            <span class="text-xl">📊</span>
+            <span class="font-medium">Statistik</span>
+          </a>
+        </nav>
+        <!-- Menu Tindakan -->
+        <div class="border-t border-slate-700 mt-4">
+          <a
+            href="#"
+            class="flex items-center gap-3 px-3 py-2 rounded hover:bg-red-700 text-red-300"
+          >
+            <span class="text-xl">🚪</span>
+            <span class="font-medium">Keluar</span>
+          </a>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <div class="flex-1 md:pl-64 flex flex-col overflow-y-auto">
+        <!-- Header -->
+        <header class="bg-white shadow p-4 flex items-center justify-between">
+          <button
+            @click="sidebarOpen = !sidebarOpen"
+            class="text-slate-800 md:hidden"
+          >
+            ☰
+          </button>
+          <h1 class="text-2xl font-bold text-gray-700">Dashboard</h1>
+          <input
+            type="text"
+            placeholder="Cari Arsip..."
+            class="border rounded px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-500"
+          />
+        </header>
+
+        <!-- Content -->
+        <main class="p-6 space-y-6">
+          <!-- Cards -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="bg-white shadow-md rounded p-4 flex items-center gap-4">
+              <div class="p-3 bg-slate-500 text-white rounded-full">📂</div>
+              <div>
+                <p class="text-sm text-gray-500">Total Arsip</p>
+                <p class="text-lg font-bold text-gray-700">123</p>
+              </div>
+            </div>
+            <div class="bg-white shadow-md rounded p-4 flex items-center gap-4">
+              <div class="p-3 bg-green-500 text-white rounded-full">✅</div>
+              <div>
+                <p class="text-sm text-gray-500">Arsip Masuk</p>
+                <p class="text-lg font-bold text-gray-700">45</p>
+              </div>
+            </div>
+            <div class="bg-white shadow-md rounded p-4 flex items-center gap-4">
+              <div class="p-3 bg-red-500 text-white rounded-full">🚪</div>
+              <div>
+                <p class="text-sm text-gray-500">Arsip Keluar</p>
+                <p class="text-lg font-bold text-gray-700">30</p>
+              </div>
+            </div>
+            <div class="bg-white shadow-md rounded p-4 flex items-center gap-4">
+              <div class="p-3 bg-yellow-500 text-white rounded-full">👥</div>
+              <div>
+                <p class="text-sm text-gray-500">Pengguna</p>
+                <p class="text-lg font-bold text-gray-700">10</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Table -->
+          <div class="bg-white shadow-md rounded">
+            <div class="p-4 border-b flex justify-between items-center">
+              <h2 class="font-bold text-gray-700 text-lg">Daftar Arsip</h2>
+              <button
+                class="bg-slate-600 text-white px-4 py-2 rounded hover:bg-slate-700"
+              >
+                Tambah Arsip
+              </button>
+            </div>
+            <table class="w-full border-collapse text-left">
+              <thead>
+                <tr class="bg-gray-100">
+                  <th class="p-4 border-b">No</th>
+                  <th class="p-4 border-b">Nama Arsip</th>
+                  <th class="p-4 border-b">Kategori</th>
+                  <th class="p-4 border-b">Tanggal</th>
+                  <th class="p-4 border-b">Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="p-4 border-b">1</td>
+                  <td class="p-4 border-b">Surat Keputusan</td>
+                  <td class="p-4 border-b">Dokumen</td>
+                  <td class="p-4 border-b">2024-11-19</td>
+                  <td class="p-4 border-b flex gap-2">
+                    <button class="text-slate-600 hover:underline">Edit</button>
+                    <button class="text-red-600 hover:underline">Hapus</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>
