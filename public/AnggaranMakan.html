@@ -63,9 +63,10 @@
               </a>
             </li>
             <li
-              x-data="{open:false}"
+              x-data="{open:true}"
               class="transition-all duration-75 ease-in-out"
-              :class="open ? 'bg-slate-700 ': 'bg-transparent' " x-transition
+              :class="open ? 'bg-slate-700 ': 'bg-transparent' "
+              x-transition
             >
               <div
                 @click="open= !open"
@@ -270,80 +271,54 @@
 
         <!-- Content -->
         <main class="py-6 px-8 space-y-6">
-          <!-- Cards -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div class="bg-white shadow-md rounded p-4 flex items-center gap-4">
-              <div class="p-3 bg-blue-50 text-blue-500 rounded-full">
-                <span><i class="fa-solid fa-folder fa-2x"></i></span>
+            <div class="py-8">
+                <div class="bg-white shadow-lg rounded-lg p-6">
+                  <h1 class="text-2xl font-bold mb-4 text-gray-800">E-Arsip Anggaran Uang Makan</h1>
+                  <!-- Form Input -->
+                  <form id="anggaranForm" class="space-y-4" @submit.prevent="tambahAnggaran()">
+                    <div>
+                      <label class="block text-gray-700 font-medium mb-1">Tanggal</label>
+                      <input type="date" id="tanggal" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300" required>
+                    </div>
+                    <div>
+                      <label class="block text-gray-700 font-medium mb-1">Nama Kegiatan</label>
+                      <input type="text" id="kegiatan" placeholder="Masukkan nama kegiatan" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300" required>
+                    </div>
+                    <div>
+                      <label class="block text-gray-700 font-medium mb-1">Jumlah Anggaran (Rp)</label>
+                      <input type="number" id="anggaran" placeholder="Masukkan jumlah anggaran" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300" required>
+                    </div>
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:ring focus:ring-blue-300">Tambah Anggaran</button>
+                  </form>
+                </div>
+            
+                <!-- Daftar Anggaran -->
+                <div x-data="arsipAnggaran()" class="bg-white shadow-lg rounded-lg p-6 mt-8">
+                  <h2 class="text-xl font-bold mb-4 text-gray-800">Daftar Anggaran Tersimpan</h2>
+                  <table class="w-full border-collapse border border-gray-200">
+                    <thead>
+                      <tr class="bg-gray-200">
+                        <th class="border border-gray-300 px-4 py-2">Tanggal</th>
+                        <th class="border border-gray-300 px-4 py-2">Nama Kegiatan</th>
+                        <th class="border border-gray-300 px-4 py-2">Jumlah Anggaran</th>
+                        <th class="border border-gray-300 px-4 py-2">Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <template x-for="(item, index) in anggaranList" :key="index">
+                        <tr>
+                          <td class="border border-gray-300 px-4 py-2" x-text="item.tanggal"></td>
+                          <td class="border border-gray-300 px-4 py-2" x-text="item.kegiatan"></td>
+                          <td class="border border-gray-300 px-4 py-2" x-text="'Rp ' + item.anggaran.toLocaleString()"></td>
+                          <td class="border border-gray-300 px-4 py-2">
+                            <button @click="hapusAnggaran(index)" class="text-red-500 hover:underline">Hapus</button>
+                          </td>
+                        </tr>
+                      </template>
+                    </tbody>
+                  </table>
+                </div>
               </div>
-              <div>
-                <p class="text-sm text-gray-500">Total Arsip</p>
-                <p class="text-lg font-bold">123</p>
-              </div>
-            </div>
-            <div class="bg-white shadow-md rounded p-4 flex items-center gap-4">
-              <div class="p-3 bg-blue-50 text-blue-500 rounded-full">
-                <i class="fa-solid fa-file-arrow-down fa-2x"></i>
-              </div>
-              <div>
-                <p class="text-sm text-gray-500">Arsip Masuk</p>
-                <p class="text-lg font-bold text-gray-700">45</p>
-              </div>
-            </div>
-            <div class="bg-white shadow-md rounded p-4 flex items-center gap-4">
-              <div class="p-3 bg-blue-50 text-blue-500 rounded-full">
-                <i class="fa-solid fa-file-arrow-up fa-2x"></i>
-              </div>
-              <div>
-                <p class="text-sm text-gray-500">Arsip Keluar</p>
-                <p class="text-lg font-bold text-gray-700">30</p>
-              </div>
-            </div>
-            <div class="bg-white shadow-md rounded p-4 flex items-center gap-4">
-              <div class="p-3 bg-blue-50 text-blue-500 rounded-full">
-                <i class="fa-solid fa-users-line fa-2x"></i>
-              </div>
-              <div>
-                <p class="text-sm text-gray-500">Pengguna</p>
-                <p class="text-lg font-bold text-gray-700">10</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Table -->
-          <div class="bg-white shadow-md rounded">
-            <div class="p-4 border-b flex justify-between items-center">
-              <h2 class="font-bold text-gray-700 text-lg">Daftar Arsip</h2>
-              <button
-                class="bg-slate-600 text-white px-4 py-2 rounded hover:bg-slate-700"
-              >
-                Tambah Arsip
-              </button>
-            </div>
-            <table class="w-full border-collapse text-left">
-              <thead>
-                <tr class="bg-gray-100">
-                  <th class="p-4 border-b">No</th>
-                  <th class="p-4 border-b">Nama Arsip</th>
-                  <th class="p-4 border-b">Kategori</th>
-                  <th class="p-4 border-b">Tanggal</th>
-                  <th class="p-4 border-b">Aksi</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="p-4 border-b">1</td>
-                  <td class="p-4 border-b">Surat Keputusan</td>
-                  <td class="p-4 border-b">Dokumen</td>
-                  <td class="p-4 border-b">2024-11-19</td>
-                  <td class="p-4 border-b flex gap-2">
-                    <button class="text-slate-600 hover:underline">Edit</button>
-                    <button class="text-red-600 hover:underline">Hapus</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
         </main>
       </div>
     </div>
